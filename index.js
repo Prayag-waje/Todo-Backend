@@ -43,6 +43,28 @@ app.get("/todos", (req,res)=>{
     });
 });
 
+app.post("/todos", (req,res)=>{
+    // console.log('Request Body', req.body);
+    const {TodoItem, priority, Mood} = req.body;
+
+    const todoobf = {
+        id: TODO_ITEMS[TODO_ITEMS.length - 1].id + 1,
+        todoItem: TodoItem,
+        priority: priority,
+        Mood: Mood,
+        isDone: false,
+        createdAt: new Date().toDateString(),
+    }
+
+    TODO_ITEMS.push(todoobf);
+
+    res.json({
+        success: true,
+        data: TODO_ITEMS,
+        message: "Todo item added successfully"
+    });
+});
+
 
 
 const PORT = process.env.PORT || 5003

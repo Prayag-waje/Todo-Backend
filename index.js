@@ -109,6 +109,23 @@ app.delete("/todos/:id", (req,res)=>{
     }       
 })
 
+app.get("/todos/search", (req,res)=>{
+    const {item, priority} = req.query;
+
+    const filterItem = TODO_ITEMS.filter((itemObj)=>{
+        if (itemObj.todoItem.toLowerCase().includes(item.toLowerCase()) && 
+            itemObj.priority.toLowerCase() == priority.toLowerCase()){
+            return true;
+        }
+        return true;
+    });
+    res.json({
+        success:true,
+        data: filterItem,
+        message: "filtered todo item fetched seccussfully",
+    })
+})
+
 
 
 app.get("/health", (erq, res)=>{

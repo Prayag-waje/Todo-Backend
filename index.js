@@ -87,6 +87,28 @@ app.get("/todos/:id", (req, res)=>{
     }
 })
 
+app.delete("/todos/:id", (req,res)=>{
+    const {id} = req.params;
+
+    const index = TODO_ITEMS.findIndex((item)=>{
+        if(item.id == id) return true;
+    });
+
+    if(index === -1){
+        res.json({
+            success: false,
+            message: "Todo item not found",
+        });
+    } else{
+        TODO_ITEMS.splice(index, 1);
+        res.json({
+            success: true,
+            data: TODO_ITEMS,
+            message: "Todo item deleted successfully",
+        });
+    }       
+})
+
 
 
 app.get("/health", (erq, res)=>{

@@ -126,6 +126,28 @@ app.get("/todos/search", (req,res)=>{
     })
 })
 
+app.patch("/todos/:id/status", (req,res)=>{
+    const { id } = req.params;
+    const todoId = parseInt(id);
+    const index = TODO_ITEMS.findIndex((item) => item.id === todoId);
+    const { isDone } = req.body;
+
+    if (index === -1) {
+        res.json({
+            success: false,
+            message: "Todo item not found"
+        });
+    } else {
+        TODO_ITEMS[index].isDone = isDone;
+        res.json({
+            success: true,
+            data: TODO_ITEMS[index],
+            message: "Todo item status updated successfully"
+        });
+    }
+
+})
+
 
 
 app.get("/health", (erq, res)=>{

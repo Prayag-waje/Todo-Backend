@@ -148,7 +148,36 @@ app.patch("/todos/:id/status", (req,res)=>{
 
 })
 
+app.put("/todos/:id",(req, res)=>{
+    const {id} = req.params;
+    const todoId = parseInt(id);
+    const index = TODO_ITEMS.findIndex(item => item.id === todoId);
 
+    if (index === -1) {
+        return res.json({
+            success: false,
+            message: "Todo item not found",
+        });
+    }
+    const { todoItem, priority, isDone, Mood} = req.body;
+
+    const newObj = {
+        todoItem,
+        priority,
+        isDone,
+        Mood,
+        id: TODO_ITEMS[index].id,
+        createdAt: TODO_ITEMS[index].createdAt,
+    }
+
+    TODO_ITEMS[index] = newObj;
+
+    res.json({
+        success: true,
+        data: TODO_ITEMS[index],
+        message: "Todo item updated successfully"
+    })
+})
 
 app.get("/health", (erq, res)=>{
     res.json({

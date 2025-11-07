@@ -65,7 +65,36 @@ app.post("/todos", (req,res)=>{
     });
 });
 
+app.get("/todos/:id", (req, res)=>{
+    
+    const {id} = req.params;
 
+    const todoItem = TODO_ITEMS.find((item)=>{
+        if(item.id == id) return item;
+    });
+
+    if(todoItem){
+        res.json({
+            success: true,
+            data: todoItem,
+            message: "Todo item fetched successfully",
+        });
+    } else{
+        res.json({
+            success:  false,
+            message: "Todo item not found",
+        })
+    }
+})
+
+
+
+app.get("/health", (erq, res)=>{
+    res.json({
+        success: true,
+        message: "Server is healthy",
+    })
+})
 
 const PORT = process.env.PORT || 5003
 
